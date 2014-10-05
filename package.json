@@ -1,0 +1,28 @@
+{
+  "name": "react-proxy-tree",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [
+    "react",
+    "cursor",
+    "proxy",
+    "data",
+    "tree"
+  ],
+  "author": "Nik Voss",
+  "contributors": [
+    "Nik Voss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trevex/react-proxy-tree.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/jest-cli/bin/jest.js"
+  },
+  "main": "./src/lib.js",
+  "devDependencies": {
+    "jest-cli": "^0.1.18"
+  }
+}

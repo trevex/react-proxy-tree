@@ -1,46 +1,10 @@
-var util = {
+var util = require('./util'),
+    Types = util.Types;
 
-    getTypeEnum: function(obj) {
-        var typeString = Object.prototype.toString.call(obj);
-        if (isObject(typeString)) {
-            return Types.OBJECT;
-        } else if (isArray(typeString)) {
-            return Types.ARRAY;
-        }
-    },
-
-    isObject: function(typeString) {
-        return typeString === "[object Object]";
-    },
-
-    isArray: function(typeString) {
-        return typeString === "[object Array]";
-    },
-
-    cloneObject: function(obj) {
-        var clone = Object.create(
-            Object.getPrototypeOf(obj),
-            Object.getOwnPropertyNames(obj).reduce(
-                function(prev, cur){
-                    prev[cur] = Object.getOwnPropertyDescriptor(obj ,cur);
-                    return prev;
-                },
-                {}
-            )
-        );
-        if(!Object.isExtensible(obj)){ Object.preventExtensions(clone); }
-        if(Object.isSealed(obj)){ Object.seal(clone); }
-        if(Object.isFrozen(obj)){ Object.freeze(clone); }
-        return clone;
-    },
-
-};
-
-var Types = {
-    ARRAY: 1,
-    OBJECT: 2,
-};
-
+/**
+ * Changes enum
+ * @type {Object}
+ */
 var Changes = {
     SET: 1,
     UPDATE: 2,
@@ -98,6 +62,11 @@ Node.prototype = {
         this.__tree.queue(Changes.UPDATE, this.__path, updateFn);
     },
 
+    /**
+     * Checks whether the current node is an array and
+     * queues a push to the contained array or issues a warning.
+     * @param  {any} newValue
+     */
     push: function(newValue) {
         if (this.__type === Types.ARRAY) {
             this.__tree.queue(Changes.PUSH, this.__path, newValue);
